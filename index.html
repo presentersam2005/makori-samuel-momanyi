@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Makori Samuel Momanyi | IT Student Portal</title>
+    <meta
+      name="description"
+      content="Information Technology student portal for Makori Samuel Momanyi, a Bachelor of Information Technology student at Kisii University, Kenya."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="home">
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <div class="brand">
+          <span class="brand-mark">IT</span>
+          <span>Makori Samuel Momanyi</span>
+        </div>
+        <nav class="main-nav">
+          <a href="#about">About</a>
+          <a href="#study">Study Areas</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#resources">Resources</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a class="nav-button" href="admin.html">Admin</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">Bachelor of Information Technology</span>
+            <h1 id="heroTitle">Makori Samuel Momanyi</h1>
+            <p id="heroSubtitle">
+              Passionate about technology, software development, networking,
+              cybersecurity, and digital problem solving at Kisii University.
+            </p>
+            <div class="cta-row">
+              <a href="#projects" class="button primary">Explore Projects</a>
+              <a href="#study" class="button secondary">Study Areas</a>
+            </div>
+            <ul class="hero-mini-stats" id="heroStats"></ul>
+          </div>
+
+          <div class="hero-panel">
+            <div class="card profile-card">
+              <div class="profile-topline">Student profile</div>
+              <h3 id="profileName">Makori Samuel Momanyi</h3>
+              <p id="profileSchool">Kisii University, Kenya</p>
+              <div class="profile-tags" id="profileTags"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section light-section">
+        <div class="container section-head">
+          <span class="section-kicker">About</span>
+          <h2>My IT journey</h2>
+        </div>
+        <div class="container two-col">
+          <div>
+            <p id="aboutText">
+              I am a Bachelor of Information Technology student at Kisii University,
+              currently building knowledge in programming, software development,
+              computer networking, cybersecurity, data handling, and digital
+              innovation. I enjoy learning, solving problems, and turning ideas into
+              practical technology solutions.
+            </p>
+            <p id="aboutTextTwo">
+              My goal is to grow into a professional who can design systems, support
+              users, secure networks, and create software that makes daily work easier
+              and more efficient.
+            </p>
+          </div>
+          <div class="stat-grid" id="impactStats"></div>
+        </div>
+      </section>
+
+      <section id="study" class="section">
+        <div class="container section-head center-align">
+          <span class="section-kicker">Study Areas</span>
+          <h2>Core information technology areas</h2>
+        </div>
+        <div class="container card-grid" id="studyCards"></div>
+      </section>
+
+      <section id="skills" class="section light-section">
+        <div class="container section-head center-align">
+          <span class="section-kicker">Skills</span>
+          <h2>Technologies I’m learning</h2>
+        </div>
+        <div class="container skills-wrap" id="skillsList"></div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="container section-head center-align">
+          <span class="section-kicker">Projects</span>
+          <h2>Project ideas and practical work</h2>
+        </div>
+        <div class="container project-grid" id="projectList"></div>
+      </section>
+
+      <section id="resources" class="section light-section">
+        <div class="container section-head center-align">
+          <span class="section-kicker">Resources</span>
+          <h2>Learning resources</h2>
+        </div>
+        <div class="container resource-grid" id="resourceList"></div>
+      </section>
+
+      <section id="contact" class="section contact-section">
+        <div class="container section-head center-align">
+          <span class="section-kicker">Contact</span>
+          <h2>Let’s connect</h2>
+        </div>
+        <div class="container contact-card">
+          <div>
+            <h3>Student contact</h3>
+            <p id="contactSummary">
+              Reach out for collaborations, projects, learning discussions, or academic opportunities.
+            </p>
+          </div>
+          <div class="contact-items" id="contactItems"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <p>© <span id="footerYear"></span> Makori Samuel Momanyi</p>
+        <a href="admin.html">Admin Portal</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
