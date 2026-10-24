@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Student Portal - Login & Registration</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              cyan: '#00f2fe',
+              blue: '#4facfe',
+              purple: '#7f00ff',
+              dark: '#0a0d14',
+              card: 'rgba(15, 23, 42, 0.75)',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'glow': 'glow 3s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            glow: {
+              '0%': { boxShadow: '0 0 15px rgba(0, 242, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.2)' },
+              '100%': { boxShadow: '0 0 25px rgba(0, 242, 254, 0.6), 0 0 50px rgba(127, 0, 255, 0.4)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom CSS Effects */
+    body {
+      background-color: #060911;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(79, 172, 254, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(127, 0, 255, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(0, 242, 254, 0.05) 0px, transparent 50%);
+    }
+
+    /* Grid overlay pattern */
+    .bg-grid-pattern {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+
+    /* Custom Glassmorphism Card */
+    .glass-card {
+      background: rgba(13, 20, 36, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .glass-input {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: all 0.25s ease;
+    }
+
+    .glass-input:focus {
+      background: rgba(15, 23, 42, 0.85);
+      border-color: #00f2fe;
+      box-shadow: 0 0 12px rgba(0, 242, 254, 0.25);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #060911;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00f2fe;
+    }
+  </style>
+</head>
+<body class="min-h-screen font-sans text-slate-200 bg-grid-pattern flex flex-col justify-between relative overflow-x-hidden selection:bg-cyan-500 selection:text-slate-900">
+
+  <!-- Floating Background Ambient Elements -->
+  <div class="fixed top-1/4 left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
+  <div class="fixed bottom-1/4 right-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none animate-pulse-slow" style="animation-delay: 2s;"></div>
+
+  <!-- Header Navigation -->
+  <header class="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between z-10">
+    <div class="flex items-center space-x-3 cursor-pointer">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+        <i class="fa-solid font-mono fa-code text-slate-950 font-bold text-xl"></i>
+      </div>
+      <div>
+        <span class="font-bold text-xl tracking-wider text-white">TECH<span class="text-cyan-400">NEXUS</span></span>
+        <span class="hidden sm:inline-block text-xs bg-slate-800 text-cyan-400 px-2 py-0.5 rounded-full ml-2 border border-slate-700">Student Portal</span>
+      </div>
+    </div>
+    
+    <div class="flex items-center space-x-4">
+      <a href="#" class="text-xs sm:text-sm text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-2">
+        <i class="fa-solid fa-circle-question"></i>
+        <span>Need Help?</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-grow flex items-center justify-center px-4 py-8 z-10">
+    <div class="w-full max-w-md">
+      
+      <!-- Glassmorphism Card Container -->
+      <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden transition-all duration-300">
+        
+        <!-- Glowing Top Border Line -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600"></div>
+
+        <!-- Header Title Section -->
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-slate-800/80 border border-slate-700 mb-3 text-cyan-400 shadow-inner">
+            <i id="portal-icon" class="fa-solid fa-right-to-bracket text-xl transition-all duration-300"></i>
+          </div>
+          <h1 id="portal-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Welcome Back</h1>
+          <p id="portal-subtitle" class="text-sm text-slate-400 mt-1">Access your tech student account & workspace</p>
+        </div>
+
+        <!-- Segmented Tab Switcher -->
+        <div class="grid grid-cols-2 gap-1 p-1 bg-slate-900/80 rounded-2xl border border-slate-800 mb-8 relative">
+          <button id="tab-login" onclick="switchTab('login')" class="py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 text-white bg-slate-800 shadow-md">
+            <i class="fa-solid fa-lock mr-2 text-xs text-cyan-400"></i>Log In
+          </button>
+          <button id="tab-register" onclick="switchTab('register')" class="py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 text-slate-400 hover:text-white">
+            <i class="fa-solid fa-user-plus mr-2 text-xs"></i>Register
+          </button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="form-login" onsubmit="handleLogin(event)" class="space-y-5">
+          <!-- Email / ID Input -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2" for="login-id">
+              Student ID or Email
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-500">
+                <i class="fa-solid fa-envelope"></i>
+              </span>
+              <input type="text" id="login-id" required placeholder="student@tech.edu or STU1024"
+                class="glass-input w-full pl-10 pr-4 py-3 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none">
+            </div>
+          </div>
+
+          <!-- Password Input -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider" for="login-password">
+                Password
+              </label>
+              <a href="#" onclick="showForgotPassword(event)" class="text-xs text-cyan-400 hover:underline">Forgot password?</a>
+            </div>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-500">
+                <i class="fa-solid fa-key"></i>
+              </span>
+              <input type="password" id="login-password" required placeholder="••••••••"
+                class="glass-input w-full pl-10 pr-10 py-3 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none">
+              <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Remember Me Checkbox -->
+          <div class="flex items-center justify-between text-xs">
+            <label class="flex items-center cursor-pointer text-slate-400 hover:text-slate-300">
+              <input type="checkbox" class="w-4 h-4 rounded bg-slate-800 border-slate-700 text-cyan-500 focus:ring-cyan-500 focus:ring-offset-slate-900">
+              <span class="ml-2">Remember this device</span>
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" 
+            class="w-full py-3.5 px-4 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-slate-950 font-bold rounded-xl shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/35 transition-all duration-200 transform active:scale-[0.99] flex items-center justify-center space-x-2">
+            <span>SIGN IN TO WORKSPACE</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </form>
+
+        <!-- REGISTER FORM (Hidden by default) -->
+        <form id="form-register" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+          <!-- Full Name Input -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="reg-name">
+              Full Name
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-500">
+                <i class="fa-solid fa-user"></i>
+              </span>
+              <input type="text" id="reg-name" required placeholder="Alex Rivera"
+                class="glass-input w-full pl-10 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none">
+            </div>
+          </div>
+
+          <!-- Email Input -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="reg-email">
+              Email Address
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-500">
+                <i class="fa-solid fa-envelope"></i>
+              </span>
+              <input type="email" id="reg-email" required placeholder="alex@university.edu"
+                class="glass-input w-full pl-10 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none">
+            </div>
+          </div>
+
+          <!-- Student ID / Username Input -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="reg-id">
+              Student ID / Username
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-500">
+                <i class="fa-solid fa-id-card"></i>
+              </span>
+              <input type="text" id="reg-id" required placeholder="CS-2026-089"
+                class="glass-input w-full pl-10 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none">
+            </div>
+          </div>
+
+          <!-- Password Input -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="reg-password">
+              Password
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-500">
+                <i class="fa-solid fa-lock"></i>
+              </span>
+              <input type="password" id="reg-password" required placeholder="At least 8 characters" onkeyup="checkPasswordStrength(this.value)"
+                class="glass-input w-full pl-10 pr-10 py-2.5 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none">
+              <button type="button" onclick="togglePasswordVisibility('reg-password', this)" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+            <!-- Password Strength Bar -->
+            <div class="mt-2 flex items-center space-x-1.5">
+              <div class="h-1 flex-1 bg-slate-800 rounded-full overflow-hidden">
+                <div id="strength-bar" class="h-full w-0 transition-all duration-300 bg-red-500"></div>
+              </div>
+              <span id="strength-text" class="text-[10px] text-slate-400 min-w-[50px] text-right font-mono">Weak</span>
+            </div>
+          </div>
+
+          <!-- Confirm Password Input -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="reg-confirm">
+              Confirm Password
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-500">
+                <i class="fa-solid fa-shield-check"></i>
+              </span>
+              <input type="password" id="reg-confirm" required placeholder="Repeat password"
+                class="glass-input w-full pl-10 pr-10 py-2.5 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none">
+            </div>
+          </div>
+
+          <!-- Terms Checkbox -->
+          <div class="flex items-start text-xs pt-1">
+            <input type="checkbox" id="terms" required class="mt-0.5 w-4 h-4 rounded bg-slate-800 border-slate-700 text-cyan-500 focus:ring-cyan-500">
+            <label for="terms" class="ml-2 text-slate-400">
+              I agree to the <a href="#" class="text-cyan-400 hover:underline">Terms of Service</a> & <a href="#" class="text-cyan-400 hover:underline">Academic Honor Code</a>
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" 
+            class="w-full py-3.5 px-4 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-slate-950 font-bold rounded-xl shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/35 transition-all duration-200 transform active:scale-[0.99] flex items-center justify-center space-x-2 mt-2">
+            <span>CREATE ACCOUNT</span>
+            <i class="fa-solid fa-user-check text-xs"></i>
+          </button>
+        </form>
+
+        <!-- Social / Single Sign-On Options -->
+        <div class="mt-6 pt-6 border-t border-slate-800">
+          <p class="text-center text-xs text-slate-500 mb-4 font-mono">-- OR CONTINUE WITH --</p>
+          <div class="grid grid-cols-2 gap-3">
+            <button onclick="mockSocialAuth('GitHub')" class="py-2.5 px-3 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 rounded-xl text-xs font-semibold text-slate-300 flex items-center justify-center space-x-2 transition-colors">
+              <i class="fa-brands fa-github text-sm"></i>
+              <span>GitHub</span>
+            </button>
+            <button onclick="mockSocialAuth('Google Student')" class="py-2.5 px-3 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 rounded-xl text-xs font-semibold text-slate-300 flex items-center justify-center space-x-2 transition-colors">
+              <i class="fa-brands fa-google text-sm text-cyan-400"></i>
+              <span>Edu Mail</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Specs Badge -->
+      <div class="mt-6 text-center text-xs text-slate-500 font-mono">
+        <span>Encrypted Connection &bull; Tech Portal v2.4</span>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Interactive Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none max-w-sm">
+    <div id="toast-body" class="glass-card border-l-4 border-cyan-400 text-white p-4 rounded-2xl shadow-2xl flex items-center space-x-3">
+      <div id="toast-icon" class="text-cyan-400 text-xl">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <div>
+        <h4 id="toast-title" class="font-bold text-sm">Notification</h4>
+        <p id="toast-message" class="text-xs text-slate-300">Action performed successfully.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full text-center py-4 text-xs text-slate-600 z-10">
+    <p>&copy; 2026 Tech Student Community Platform. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Tab Switcher Logic
+    function switchTab(type) {
+      const loginForm = document.getElementById('form-login');
+      const registerForm = document.getElementById('form-register');
+      const tabLogin = document.getElementById('tab-login');
+      const tabRegister = document.getElementById('tab-register');
+      const portalTitle = document.getElementById('portal-title');
+      const portalSubtitle = document.getElementById('portal-subtitle');
+      const portalIcon = document.getElementById('portal-icon');
+
+      if (type === 'login') {
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
+
+        tabLogin.className = "py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 text-white bg-slate-800 shadow-md";
+        tabRegister.className = "py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 text-slate-400 hover:text-white";
+
+        portalTitle.textContent = "Welcome Back";
+        portalSubtitle.textContent = "Access your tech student account & workspace";
+        portalIcon.className = "fa-solid fa-right-to-bracket text-xl text-cyan-400";
+      } else {
+        loginForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+
+        tabRegister.className = "py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 text-white bg-slate-800 shadow-md";
+        tabLogin.className = "py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 text-slate-400 hover:text-white";
+
+        portalTitle.textContent = "Create Account";
+        portalSubtitle.textContent = "Join the developer network & campus hub";
+        portalIcon.className = "fa-solid fa-user-plus text-xl text-cyan-400";
+      }
+    }
+
+    // Toggle Password Visibility
+    function togglePasswordVisibility(fieldId, btn) {
+      const field = document.getElementById(fieldId);
+      const icon = btn.querySelector('i');
+      if (field.type === 'password') {
+        field.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash';
+      } else {
+        field.type = 'password';
+        icon.className = 'fa-solid fa-eye';
+      }
+    }
+
+    // Check Password Strength
+    function checkPasswordStrength(val) {
+      const bar = document.getElementById('strength-bar');
+      const text = document.getElementById('strength-text');
+
+      if (val.length === 0) {
+        bar.style.width = '0%';
+        text.textContent = 'Weak';
+        text.className = 'text-[10px] text-slate-400 min-w-[50px] text-right font-mono';
+        return;
+      }
+
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+
+      switch (score) {
+        case 1:
+          bar.style.width = '25%';
+          bar.className = 'h-full transition-all duration-300 bg-red-500';
+          text.textContent = 'Weak';
+          text.className = 'text-[10px] text-red-400 min-w-[50px] text-right font-mono';
+          break;
+        case 2:
+          bar.style.width = '50%';
+          bar.className = 'h-full transition-all duration-300 bg-amber-500';
+          text.textContent = 'Fair';
+          text.className = 'text-[10px] text-amber-400 min-w-[50px] text-right font-mono';
+          break;
+        case 3:
+          bar.style.width = '75%';
+          bar.className = 'h-full transition-all duration-300 bg-blue-500';
+          text.textContent = 'Good';
+          text.className = 'text-[10px] text-blue-400 min-w-[50px] text-right font-mono';
+          break;
+        case 4:
+          bar.style.width = '100%';
+          bar.className = 'h-full transition-all duration-300 bg-emerald-400';
+          text.textContent = 'Strong';
+          text.className = 'text-[10px] text-emerald-400 min-w-[50px] text-right font-mono';
+          break;
+      }
+    }
+
+    // Form Handlers
+    function handleLogin(e) {
+      e.preventDefault();
+      const id = document.getElementById('login-id').value;
+      showToast('Login Successful!', `Welcome back, student (${id}). Redirecting...`, 'success');
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const pass = document.getElementById('reg-password').value;
+      const confirm = document.getElementById('reg-confirm').value;
+
+      if (pass !== confirm) {
+        showToast('Validation Error', 'Passwords do not match!', 'error');
+        return;
+      }
+
+      showToast('Account Created!', 'Your registration was successful. Please verify email.', 'success');
+      setTimeout(() => switchTab('login'), 2000);
+    }
+
+    function mockSocialAuth(provider) {
+      showToast('SSO Redirect', `Connecting securely with ${provider}...`, 'info');
+    }
+
+    function showForgotPassword(e) {
+      e.preventDefault();
+      showToast('Reset Link Sent', 'Check your student email for password reset instructions.', 'info');
+    }
+
+    // Custom Toast Notification System
+    function showToast(title, message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastBody = document.getElementById('toast-body');
+      const toastTitle = document.getElementById('toast-title');
+      const toastMessage = document.getElementById('toast-message');
+      const toastIcon = document.getElementById('toast-icon');
+
+      toastTitle.textContent = title;
+      toastMessage.textContent = message;
+
+      if (type === 'success') {
+        toastBody.className = "glass-card border-l-4 border-emerald-400 text-white p-4 rounded-2xl shadow-2xl flex items-center space-x-3";
+        toastIcon.className = "text-emerald-400 text-xl";
+        toastIcon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+      } else if (type === 'error') {
+        toastBody.className = "glass-card border-l-4 border-red-500 text-white p-4 rounded-2xl shadow-2xl flex items-center space-x-3";
+        toastIcon.className = "text-red-500 text-xl";
+        toastIcon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+      } else {
+        toastBody.className = "glass-card border-l-4 border-cyan-400 text-white p-4 rounded-2xl shadow-2xl flex items-center space-x-3";
+        toastIcon.className = "text-cyan-400 text-xl";
+        toastIcon.innerHTML = '<i class="fa-solid fa-circle-info"></i>';
+      }
+
+      // Show toast
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      // Hide after 3.5s
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
